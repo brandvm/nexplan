@@ -1,0 +1,1459 @@
+[
+  {
+    "url": "https://www.nexplaninstitute.com/",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s",
+      "sw-testimonials"
+    ],
+    "page_specific_scripts": [
+      {
+        "sha256": "5f2e32b6798c03fb2883a097007243fc9b1957be10125cbb2fc5a27b65dd90a0",
+        "body": "\ndocument.addEventListener('click', function (e) {\n  const link = e.target.closest('[data-tab-link]');\n  if (!link) return;\n\n  // Stop Webflow from switching the tab\n  e.preventDefault();\n  e.stopImmediatePropagation();\n\n  const url = link.getAttribute('data-tab-link');\n  if (link.getAttribute('data-tab-target') === '_blank') {\n    window.open(url, '_blank');\n  } else {\n    window.location.href = url;\n  }\n}, true); // capture phase \u2014 runs before Webflow's tab handler\n"
+      }
+    ],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.c291d71e.100dec4045bd370a.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/about",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [
+      {
+        "sha256": "7fb4717d0817dab7fec8e2a7863f6ca6b6bea507423119af15ab7d6cb130568d",
+        "body": "\n  (function () {\n    var MIN_THUMB = 28;\n\n    function build(content) {\n      if (content.dataset.customScroll) return;\n      content.dataset.customScroll = '1';\n\n      // wrap\n      var wrap = document.createElement('div');\n      wrap.className = 'team-scroll-wrap';\n      content.parentNode.insertBefore(wrap, content);\n      wrap.appendChild(content);\n\n      var track = document.createElement('div');\n      track.className = 'team-scrollbar';\n      var thumb = document.createElement('div');\n      thumb.className = 'team-scrollbar-thumb';\n      track.appendChild(thumb);\n      wrap.appendChild(track);\n\n      var dragging = false,\n        startY = 0,\n        startScroll = 0,\n        ratio = 1;\n\n      function update() {\n        var sh = content.scrollHeight,\n          ch = content.clientHeight;\n        if (sh <= ch + 1) {\n          track.classList.remove('is-active');\n          return;\n        }\n        track.classList.add('is-active');\n\n        var trackH = track.clientHeight;\n        var thumbH = Math.max(MIN_THUMB, trackH * (ch / sh));\n        var maxScroll = sh - ch;\n        var maxThumb = trackH - thumbH;\n        ratio = maxScroll / maxThumb;\n\n        thumb.style.height = thumbH + 'px';\n        thumb.style.transform = 'translateY(' + content.scrollTop / ratio + 'px)';\n      }\n\n      content.addEventListener('scroll', update, { passive: true });\n      window.addEventListener('resize', update);\n\n      // fires when the modal goes from hidden (0px) to visible\n      if (window.ResizeObserver) {\n        var ro = new ResizeObserver(update);\n        ro.observe(content);\n        if (content.firstElementChild) ro.observe(content.firstElementChild);\n      }\n\n      // drag\n      thumb.addEventListener('pointerdown', function (e) {\n        e.preventDefault();\n        dragging = true;\n        startY = e.clientY;\n        startScroll = content.scrollTop;\n        track.classList.add('is-dragging');\n        thumb.setPointerCapture(e.pointerId);\n      });\n      thumb.addEventListener('pointermove', function (e) {\n        if (!dragging) return;\n        content.scrollTop = startScroll + (e.clientY - startY) * ratio;\n      });\n      ['pointerup', 'pointercancel'].forEach(function (evt) {\n        thumb.addEventListener(evt, function (e) {\n          dragging = false;\n          track.classList.remove('is-dragging');\n          if (thumb.hasPointerCapture(e.pointerId)) thumb.releasePointerCapture(e.pointerId);\n        });\n      });\n\n      // click track to jump\n      track.addEventListener('pointerdown', function (e) {\n        if (e.target === thumb) return;\n        var rect = track.getBoundingClientRect();\n        var thumbH = thumb.offsetHeight;\n        var target = (e.clientY - rect.top - thumbH / 2) * ratio;\n        content.scrollTo({ top: target, behavior: 'smooth' });\n      });\n\n      update();\n      content._refreshScrollbar = update;\n    }\n\n    function init() {\n      document.querySelectorAll('.team-modal-content').forEach(build);\n    }\n\n    if (document.readyState === 'loading') {\n      document.addEventListener('DOMContentLoaded', init);\n    } else {\n      init();\n    }\n\n    // call window.refreshTeamScrollbars() after injecting content dynamically\n    window.refreshTeamScrollbars = function () {\n      init();\n      document.querySelectorAll('.team-modal-content').forEach(function (el) {\n        if (el._refreshScrollbar) el._refreshScrollbar();\n      });\n    };\n  })();\n"
+      }
+    ],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.39b2460b.2464d6ef759cde00.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/book-a-session",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [
+      {
+        "sha256": "069734beefd8b83674cac833a1cf08fb560dd871d5206dd2032898da6c284086",
+        "body": "\n  document.addEventListener('DOMContentLoaded', function () {\n    document.querySelectorAll('.session-coaching-form').forEach(function (form) {\n      var select = form.querySelector('select');\n      var input  = form.querySelector('input[type=\"submit\"]');\n      var buttonW = form.querySelector('.button-w');\n      if (!select || !input || !buttonW) return;\n\n      function sync() {\n        var noneSelected = select.value === '';\n        input.disabled = noneSelected;                       // blocks submission\n        buttonW.classList.toggle('is-disabled', noneSelected); // visual state\n      }\n\n      select.addEventListener('change', sync);\n      sync(); // set initial state on load\n    });\n  });\n"
+      }
+    ],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/coaching",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/coaching/executive-transitions",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-case-studies"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/coaching/next-gen-transitions",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-case-studies"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/coaching/reinvention-reset",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-case-studies"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/consulting-training",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/contact",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.ec257b5d.33c187db11f2a771.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/faqs",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/legal/privacy-policy",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/legal/terms-of-service",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources",
+    "status": 200,
+    "slider_wrappers": [],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.ec257b5d.33c187db11f2a771.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/atomic-habits-how-to-get-1-better-every-day-james-clear",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/atomic-habits-quick-summary-best-self-improvement-book-atomic-habits-a-quick-chapter",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/boundary-builder-worksheet",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/burnout-baseline-assessment",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/change-your-life-one-tiny-step-at-a-time",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/emily-nagoski-and-amelia-nagoski-the-cure-for-burnout-hint-it-isnt-self-care-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/finding-confidence-in-the-early-stages-of-a-career",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/finding-direction-after-graduation",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/five-transition-myths-that-keep-high-performers-stuck",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/forget-big-change-start-with-a-tiny-habit-bj-fogg-tedxfremont",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/from-cfo-to-strategic-enterprise-leader",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/from-strategy-director-to-social-impact-leader-2",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/future-vision-canvas",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/how-to-know-when-its-time-to-leave-stay-or-redesign-your-path",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/how-to-make-hard-choices-ruth-chang",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/how-to-make-stress-your-friend-kelly-mcgonigal-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/identity-rehearsal-scripts",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/narrative-reframe-journal",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/next-chapter-blueprint",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/quarterly-reset-ritual",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/rebuilding-confidence-after-early-career-burnout",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/recovering-creativity-after-burnout",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/recovery-ritual-builder",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/rethinking-infidelity-a-talk-for-anyone-who-has-ever-loved-esther-perel-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/scaling-leadership-during-a-hypergrowth-moment",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/stepping-into-enterprise-leadership",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/stepping-into-leadership-across-a-complex-region",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/strengths-map",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/sustainable-success-systems-checklist",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-3r-framework-a-new-architecture-for-human-transformation",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-5-regrets-of-the-dying-life-lessons-everybody-learns-too-late-bronnie-ware",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-architecture-of-reinvention-how-high-performers-navigate-life-and-leadership-transitions",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-burnout-baseline-a-new-framework-for-understanding-executive-exhaustion",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-burnout-baseline-blog-a-new-framework-for-understanding-executive-exhaustion",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-global-state-of-transition-why-reinvention-is-becoming-a-life-skill",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-hidden-emotional-labor-of-being-a-high-capacity-young-adult",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-identity-gap-why-high-performers-outgrow-their-lives-before-they-outgrow-their-roles",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-power-of-belief-mindset-and-success-eduardo-briceno-tedxmanhattanbeach",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-power-of-full-engagement-by-jim-loehr-and-tony-schwartz-animated-core-message",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-power-of-vulnerability-brene-brown-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-premium-experience-standard-what-clients-really-want-in-a-transformational-partner",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-psychology-of-momentum-how-to-restart-when-you-feel-stuck",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-quiet-reinvention-in-toronto",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-real-reason-why-we-are-tired-and-what-to-do-about-it-saundra-dalton-smith-tedxatlanta",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/the-surprising-habits-of-original-thinkers-adam-grant-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/theres-more-to-life-than-being-happy-emily-esfahani-smith-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/turning-early-career-pressure-into-personal-clarity",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/value-compass",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/welcome-to-nexplan-institute-a-coaching-framework-for-clarity-alignment-sustainable-change",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/welcome-to-nexplan-institute-coaching-for-clarity-alignment-sustainable-change",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/what-burnout-really-means-in-dubai-london-toronto-and-singapore",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/what-makes-a-good-life-lessons-from-the-longest-study-on-happiness-robert-waldinger-ted",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/wheel-of-energy",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/when-success-no-longer-felt-like-his-own",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/who-am-i",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/why-leadership-transitions-fail-and-how-the-3r-framework-dramatically-improves-the-odds",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  },
+  {
+    "url": "https://www.nexplaninstitute.com/resources/why-reinvention-fails-without-recovery-first",
+    "status": 200,
+    "slider_wrappers": [
+      "sw-resources-s"
+    ],
+    "page_specific_scripts": [],
+    "external_scripts": [
+      "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+      "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=69822d94488e3d29d81220a5",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.b243a97fed2d3524.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.schunk.c4ff869e5541e3fe.js",
+      "https://cdn.prod.website-files.com/69822d94488e3d29d81220a5/js/webflow.b18f2bbb.7e80b16ae030499b.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js",
+      "https://cdn.prod.website-files.com/gsap/3.15.0/Flip.min.js",
+      "https://unpkg.com/lenis@1.1.5/dist/lenis.min.js",
+      "https://q3vrtx.csb.app/nexplan-main.js"
+    ]
+  }
+]
