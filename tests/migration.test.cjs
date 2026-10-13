@@ -107,3 +107,12 @@ test('navigation shrinks only after the original 12px threshold', () => {
   context.pageYOffset = 13; calls.listeners.scroll[0](); calls.frame();
   assert.deepEqual(calls.shrunk, { name: 'is_shrunk', value: true });
 });
+test('sliders sharing one wrapper each bind their own nearest navigation', () => {
+  const { calls, element, prev, next } = boot({ slider: true, swiper: true });
+  const ownPrev = {}, ownNext = {};
+  element.parentElement = { parentElement: null, querySelector(selector) { return selector === '.swiper-prev' ? ownPrev : ownNext; } };
+  calls.timers.shift()();
+  const { options } = calls.sliders[0];
+  assert.equal(options.navigation.prevEl, ownPrev); assert.equal(options.navigation.nextEl, ownNext);
+  assert.notEqual(options.navigation.prevEl, prev); assert.notEqual(options.navigation.nextEl, next);
+});

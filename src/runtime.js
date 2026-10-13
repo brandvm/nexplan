@@ -256,14 +256,24 @@ export function initNexplan(LenisConstructor, assetBase) {
       return o;
     }
 
+    // Several sliders can share one wrapper (Webflow Tabs), so prefer the
+    // controls nearest to the slider before falling back to the wrapper.
+    function findNav(el, root, selector) {
+      for (
+        let node = el.parentElement;
+        node && node !== root;
+        node = node.parentElement
+      ) {
+        const hit = node.querySelector(selector);
+        if (hit) return hit;
+      }
+      return root.querySelector(selector);
+    }
+
     function withNav(el, cfg, opts) {
       const root = el.closest(cfg.wrapper || ":root") || document;
-      const prev = cfg.navPrev
-        ? root.querySelector(cfg.navPrev)
-        : root.querySelector(".swiper-prev");
-      const next = cfg.navNext
-        ? root.querySelector(cfg.navNext)
-        : root.querySelector(".swiper-next");
+      const prev = findNav(el, root, cfg.navPrev || ".swiper-prev");
+      const next = findNav(el, root, cfg.navNext || ".swiper-next");
       if (prev || next)
         opts.navigation = { prevEl: prev || null, nextEl: next || null };
       return opts;

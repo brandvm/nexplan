@@ -63,6 +63,6 @@ GitHub Actions installs the lockfile, checks syntax, builds and tests, and verif
 
 ## Validation
 
-Nine behavior tests cover the GSAP/Lenis connection, duplicate inclusion, editor exclusion, missing dependencies, conditional vendor loading, versioned URLs, failed Swiper loading, slider options/navigation and the navbar threshold. All 70 homepage-linked pages returned HTTP 200 when inspected. Local browser validation and CDN verification are recorded in the release notes. No enquiry form was submitted, and no Webflow site was published during this migration.
+Ten behavior tests cover the GSAP/Lenis connection, duplicate inclusion, editor exclusion, missing dependencies, conditional vendor loading, versioned URLs, failed Swiper loading, slider options/navigation, per-slider navigation inside shared wrappers and the navbar threshold. All 70 homepage-linked pages returned HTTP 200 when inspected. Local browser validation and CDN verification are recorded in the release notes. No enquiry form was submitted, and no Webflow site was published during this migration.
 
 This repository contains custom code and build assets. Webflow continues to own page layout, generated CSS/JS, CMS content and interactions; this is not a full site export.

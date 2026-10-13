@@ -25,6 +25,21 @@ repos to improve `brandvm/wf-template`.
 
 <!-- Add new entries here, newest first. -->
 
+### 2026-10-13 · Tabbed sliders all bound to the first tab's arrows
+- Area: js
+- Scope: template-candidate
+- Symptom: On the homepage Resources & Insights tabs the prev/next arrows
+  worked under "All" only; Blogs, Videos, Podcasts and Case Studies could
+  be dragged but their arrows did nothing.
+- Cause: The five tab sliders share one `.sw-resources-s` wrapper and
+  `withNav` took `wrapper.querySelector(".swiper-prev")`, so every slider
+  was given the first pane's buttons.
+- Fix: `findNav` walks up from the slider and takes the nearest controls,
+  falling back to the wrapper lookup (unchanged for single-slider
+  wrappers). Released as v1.0.1.
+- Status: fixed v1.0.1
+- Found by: human
+
 ### 2026-09-30 · Local CSS edits never reach the Designer canvas
 - Area: designer
 - Scope: template-candidate

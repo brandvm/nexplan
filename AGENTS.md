@@ -16,7 +16,7 @@ and no dev/prod switcher.
 - GitHub: `brandvm/nexplan`, default branch `main`
 - Webflow site ID: `69822d94488e3d29d81220a5` (from the Webflow CDN paths in
   `originals/page-inventory.json`)
-- Staging site: unknown — fill in (`*.webflow.io` not recorded in the repo)
+- Staging site: `https://nexp.webflow.io/`
 - Bundles (production, pinned):
   `https://cdn.jsdelivr.net/gh/brandvm/nexplan@v1.0.0/dist/nexplan.min.js`,
   `https://cdn.jsdelivr.net/gh/brandvm/nexplan@v1.0.0/dist/nexplan.min.css`
